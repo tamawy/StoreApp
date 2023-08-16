@@ -1,4 +1,7 @@
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using System.Linq;
 
 namespace StoreApp.DAL
 {
@@ -18,8 +21,9 @@ namespace StoreApp.DAL
         {
             modelBuilder.Entity<Space>()
                 .HasMany(e => e.Products)
-                .WithOptional(e => e.Space)
-                .HasForeignKey(e => e.SpaceFK);
+                .WithRequired(e => e.Space)
+                .HasForeignKey(e => e.SpaceFK)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Store>()
                 .HasMany(e => e.Spaces)

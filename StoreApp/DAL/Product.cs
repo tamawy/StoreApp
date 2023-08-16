@@ -16,7 +16,7 @@ namespace StoreApp.DAL
 
         public long count { get; set; }
 
-        public long? SpaceFK { get; set; }
+        public long SpaceFK { get; set; }
 
         public virtual Space Space { get; set; }
     }
