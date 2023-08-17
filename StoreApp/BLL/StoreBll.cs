@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Web.UI.WebControls;
 using StoreApp.DAL;
 
 namespace StoreApp.BLL
@@ -26,31 +28,31 @@ namespace StoreApp.BLL
 
         }
 
-        public IEnumerable<Store> GetAll()
+        public List<Store> GetAll()
         {
             using var db = new DBModel();
-            return db.Stores;
+            return db.Stores.ToList();
         }
 
-        public Store GetOne(long id)
+        public Store GetOne(long? id)
         {
-            return GetAll().FirstOrDefault(s => s.Id == id);
+            using var db = new DBModel();
+            return db.Stores.FirstOrDefault(s => s.Id == id);
         }
 
-        public (bool done, string message) Update(Store item)
+        public (bool done, string message) Update(Store store)
         {
             try
             {
                 using var db = new DBModel();
-                var itemInDb = db.Stores.FirstOrDefault(s => s.Id == item.Id);
+                var itemInDb = db.Stores.FirstOrDefault(s => s.Id == store.Id);
                 if(itemInDb == null)
                     return (false, MessagesHelper.ItemNotFound);
-
-                itemInDb.Address = item.Address;
-                itemInDb.IsInvoiceDirect = item.IsInvoiceDirect;
-                itemInDb.IsMain = item.IsMain;
-                itemInDb.Name = item.Name;
-
+                itemInDb.Name = store.Name;
+                itemInDb.Address = store.Address;
+                itemInDb.IsInvoiceDirect = store.IsInvoiceDirect;
+                itemInDb.IsMain = store.IsMain;
+               
                 db.SaveChanges();
                 
                 return (true, MessagesHelper.UpdatedSuccessfully);
@@ -78,6 +80,7 @@ namespace StoreApp.BLL
                 
                 if(itemInDb == null) return (false, MessagesHelper.ItemNotFound);
                 db.Stores.Remove(itemInDb);
+                db.SaveChanges();
                 return (true, MessagesHelper.DeletedSuccessfully);
             }
             catch (Exception)

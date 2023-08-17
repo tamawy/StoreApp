@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using StoreApp.DAL;
 
@@ -24,28 +25,29 @@ namespace StoreApp.BLL
             }
         }
 
-        public IEnumerable<Space> GetAll()
+        public List<Space> GetAll()
         {
             using var db = new DBModel();
-            return db.Spaces;
+            return db.Spaces.ToList();
         }
 
-        public Space GetOne(long id)
+        public Space GetOne(long? id)
         {
-            return GetAll().FirstOrDefault(s => s.Id == id);
+            using var db = new DBModel();
+            return db.Spaces.FirstOrDefault(s => s.Id == id);
         }
 
-        public (bool done, string message) Update(Space space)
+        public (bool done, string message) Update(Space store)
         {
             try
             {
                 using var db = new DBModel();
-                var itemInDb = db.Spaces.FirstOrDefault(s => s.Id == space.Id);
+                var itemInDb = db.Spaces.FirstOrDefault(s => s.Id == store.Id);
                 if (itemInDb == null)
                     return (false, MessagesHelper.ItemNotFound);
 
-                itemInDb.Name = space.Name;
-                itemInDb.StoreFK = space.StoreFK;
+                itemInDb.Name = store.Name;
+                itemInDb.StoreFK = store.StoreFK;
 
                 db.SaveChanges();
 
@@ -56,7 +58,11 @@ namespace StoreApp.BLL
                 return (false, MessagesHelper.Error);
             }
         }
-
+        /// <summary>
+        /// Delete space even if it is last space in store
+        /// </summary>
+        /// <param name="id">Space Id</param>
+        /// <returns>Tuple represents process status and a message</returns>
         public (bool done, string message) Delete(long id)
         {
             try
@@ -64,9 +70,10 @@ namespace StoreApp.BLL
                 using var db = new DBModel();
                 var itemInDb = db.Spaces.FirstOrDefault(s => s.Id == id);
                 if (itemInDb == null) return (false, MessagesHelper.ItemNotFound);
-                if (itemInDb.Products.Count > 0) // if space is not empty
+                if (itemInDb.Products.Count > 0) // if store is not empty
                     return (false, "Space is not empty");
                 db.Spaces.Remove(itemInDb);
+                db.SaveChanges();
                 return (true, MessagesHelper.DeletedSuccessfully);
             }
             catch (Exception)
@@ -74,7 +81,23 @@ namespace StoreApp.BLL
                 return (false, MessagesHelper.Error);
             }
         }
-
+        /// <summary>
+        /// Delete space only if it is not last space in store
+        /// </summary>
+        /// <param name="id">Space Id</param>
+        /// <returns>Tuple represents process status and a message</returns>
+        public (bool doen, string message) DeleteIfNotLast(long id)
+        {
+            const int minimumNumberOfSpaces = 1;
+            using var db = new DBModel();
+            var itemInDb = db.Spaces.Where(s => s.Id == id).Include(s => s.Store).FirstOrDefault();
+            return itemInDb?.Store.Spaces.Count > minimumNumberOfSpaces ? (false, "You need at least one space in the store") : Delete(id);
+        }
+        /// <summary>
+        /// Delete all spaces in a store
+        /// </summary>
+        /// <param name="store">Store</param>
+        //// <returns>Tuple represents process status and a message</returns>
         public (bool done, string message) DeleteSpacesInStore(Store store)
         {
             foreach (var space in store.Spaces)
@@ -87,14 +110,14 @@ namespace StoreApp.BLL
         }
 
         /// <summary>
-        /// Split a space into number of spaces
+        /// Split a store into number of spaces
         /// </summary>
         /// <param name="spaceId">Current Space Id</param>
         /// <param name="numberOfSpaces">Number of new spaces</param>
         /// <returns>Tuple represents process status and a message</returns>
         public (bool done, string message) SplitSpace(long spaceId, int numberOfSpaces)
         {
-            // Get the space
+            // Get the store
             var currentSpace = GetOne(spaceId);
             if (currentSpace == null) return (true, MessagesHelper.ItemNotFound);
 
@@ -128,11 +151,11 @@ namespace StoreApp.BLL
         }
 
         /// <summary>
-        /// Merge spaces and move all products to first space
+        /// Merge spaces and move all products to first store
         /// </summary>
         /// <param name="storeId"></param>
-        /// <param name="firstSpaceId">Id of first space</param>
-        /// <param name="secondSpaceId">Id of second space</param>
+        /// <param name="firstSpaceId">Id of first store</param>
+        /// <param name="secondSpaceId">Id of second store</param>
         /// <returns></returns>
         public (bool done, string message) MergeTwoSpaces(long storeId, long firstSpaceId, long secondSpaceId)
         {
@@ -143,7 +166,7 @@ namespace StoreApp.BLL
             if (!IsSpacesAtTheSameStore(storeId, spacesIds))
                 return (false, "Can not merge spaces in different stores.");
             
-            // Move Products in the second space to the first space
+            // Move Products in the second store to the first store
             var productsInFirstSpace = store.Spaces.FirstOrDefault(s => s.Id == secondSpaceId)?.Products;
             var result = ProductBll.MoveProductsToAnotherSpace(productsInFirstSpace, firstSpaceId);
             

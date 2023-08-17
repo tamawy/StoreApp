@@ -9,7 +9,7 @@ namespace StoreApp.BLL
     internal interface IBusinessAccessLayer<T> where T : class
     {
         /// <summary>
-        /// Create an item in a specific table in database
+        /// Create an store in a specific table in database
         /// </summary>
         /// <param name="item">Item to be created</param>
         /// <returns>Tuple represents process status and a message</returns>
@@ -18,27 +18,27 @@ namespace StoreApp.BLL
         /// <summary>
         /// Get all items in a specific table in database
         /// </summary>
-        /// <returns>IEnumerable of all items in specific table</returns>
-        IEnumerable<T> GetAll();
+        /// <returns>List of all items in specific table</returns>
+        List<T> GetAll();
         
         /// <summary>
-        /// Get a specific item from table in database
+        /// Get a specific store from table in database
         /// </summary>
-        /// <param name="id">Id of the item</param>
+        /// <param name="id">Id of the store</param>
         /// <returns>Item if found or null</returns>
-        T GetOne(long  id);
+        T GetOne(long?  id);
         
         /// <summary>
-        /// Update specific item in a table in database
+        /// Update specific store in a table in database
         /// </summary>
-        /// <param name="item"></param>
+        /// <param name="store"></param>
         /// <returns>Tuple represents process status and a message</returns>
-        (bool done, string message) Update(T item);
+        (bool done, string message) Update(T store);
         
         /// <summary>
-        /// Delete A specific item in a table in database
+        /// Delete A specific store in a table in database
         /// </summary>
-        /// <param name="id">Id of the item</param>
+        /// <param name="id">Id of the store</param>
         /// <returns>Tuple represents process status and a message</returns>
         (bool done, string message) Delete(long id);
     }

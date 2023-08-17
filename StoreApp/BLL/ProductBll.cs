@@ -14,29 +14,30 @@ namespace StoreApp.BLL
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Product> GetAll()
+        public List<Product> GetAll()
         {
             using var db = new DBModel();
-            return db.Products;
+            return db.Products.ToList();
         }
 
-        public Product GetOne(long id)
+        public Product GetOne(long? id)
         {
-            return GetAll().FirstOrDefault(s => s.Id == id);
+            using var db = new DBModel();
+            return db.Products.FirstOrDefault(p => p.Id == id);
         }
 
-        public (bool done, string message) Update(Product product)
+        public (bool done, string message) Update(Product store)
         {
             try
             {
                 using var db = new DBModel();
-                var itemInDb = db.Products.FirstOrDefault(s => s.Id == product.Id);
+                var itemInDb = db.Products.FirstOrDefault(s => s.Id == store.Id);
                 if (itemInDb == null)
                     return (false, MessagesHelper.ItemNotFound);
 
-                itemInDb.Name = product.Name;
-                itemInDb.SpaceFK = product.SpaceFK;
-                itemInDb.count = product.count;
+                itemInDb.Name = store.Name;
+                itemInDb.SpaceFK = store.SpaceFK;
+                itemInDb.count = store.count;
 
                 db.SaveChanges();
 
@@ -53,13 +54,13 @@ namespace StoreApp.BLL
             throw new NotImplementedException();
         }
         /// <summary>
-        /// Move a product to another space inside the same store
+        /// Move a store to another store inside the same store
         /// </summary>
-        /// <param name="productId">Id of product to be moved</param>
-        /// <param name="spaceId">Id of the new space</param>
+        /// <param name="productId">Id of store to be moved</param>
+        /// <param name="spaceId">Id of the new store</param>
         /// <returns>Tuple represents process status and a message</returns>
-        /// First: It checks if the new space is inside the first space
-        /// Second Moves the product.
+        /// First: It checks if the new store is inside the first store
+        /// Second Moves the store.
         public (bool done, string message) MoveToAnotherSpace(long productId, long spaceId)
         {
             var db = new DBModel();
@@ -67,28 +68,16 @@ namespace StoreApp.BLL
             if (product == null)
                 return (false, MessagesHelper.ItemNotFound);
 
-            // check if the new space inside the same store
-            
-            // 1. Get the space that contains the product
-            var space = SpaceBll.GetOne(product.SpaceFK);
-            if (space == null)
-                return (false, MessagesHelper.Error);
-            
-            // Get the store that contains the space
-            var store = StoreBll.GetOne(space.StoreFK);
-            if (store == null)
-                return (false, MessagesHelper.Error);
-
-            // Search for the new space
-            if (!store.Spaces.Select(s => s.Id).Contains(spaceId))
-                return (false, "Can not move item to a store in another space.");
+            // check if the new store inside the same store
+            if (!product.Space.Store.Spaces.Select(s => s.Id).Contains(spaceId))
+                return (false, "Can not move item to a store in another store.");
 
             product.SpaceFK = spaceId;
             return Update(product);
         }
 
         /// <summary>
-        /// Move list of products to another space
+        /// Move list of products to another store
         /// </summary>
         /// <param name="products">Products to be moved</param>
         /// <param name="spaceId">Id of the new Space</param>
