@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using StoreApp.BLL;
 using StoreApp.DAL;
@@ -15,7 +16,12 @@ namespace StoreApp.Areas.Admin.Controllers
         {
             return View(StoreBll.GetAll());
         }
-
+        // GET: Admin/Stores/GetAll
+        [HttpGet]
+        public PartialViewResult GetAll()
+        {
+            return PartialView("PartialViews/_StoresTable", StoreBll.GetAll());
+        }
         // GET: Admin/Stores/Details/5
         public ActionResult Details(long? id)
         {
@@ -32,20 +38,21 @@ namespace StoreApp.Areas.Admin.Controllers
         }
 
         // GET: Admin/Stores/Create
-        public ActionResult Create()
+        public PartialViewResult Create()
         {
-            return View();
+            return PartialView("PartialViews/_Create");
         }
 
         // POST: Admin/Stores/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,IsMain,IsInvoiceDirect,Address")] Store store)
+        // [ValidateAntiForgeryToken]
+        public ActionResult Create(Store store)
         {
-            if (!ModelState.IsValid) return View(store);
-            StoreBll.Create(store);
+            if (!ModelState.IsValid)
+                return RedirectToAction("Index");
+            var result = StoreBll.Create(store);
             return RedirectToAction("Index");
         }
 

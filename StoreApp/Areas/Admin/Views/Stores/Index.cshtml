@@ -1,27 +1,39 @@
-﻿@using NonFactors.Mvc.Grid
-@model IEnumerable<StoreApp.DAL.Store>
+﻿@model IEnumerable<StoreApp.DAL.Store>
+@using StoreApp.DAL
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="grid-container">
+    <div class="grid-item"></div>
+    <div class="grid-item"></div>
+    <div class="grid-item">
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createForm">Create</button>
+    </div>
+</div>
+<div>
+    @Html.Partial("PartialViews/_Search", new Store())
+</div>
+<div id="allData">
+    @Html.Partial("PartialViews/_ModalPopUp", model: ("createForm", "Add Store", Html.Partial("PartialViews/_Create", new Store())))
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
+<div>
+    @Html.Partial("PartialViews/_StoresTable", Model)
+</div>
 
-</p>
-@(Html
-    .Grid(Model)
-    .Build(columns =>
-    {
-        columns.Add(m => m.Name).Titled("Name");
-        columns.Add(m => m.Address).Titled("Address");
-        columns.Add(m => m.IsMain).Titled("Is Main");
-        columns.Add(m => m.IsInvoiceDirect).Titled("Is Invoice Direct");
-    }).Pageable(pager =>
-    {
-        pager.RowsPerPage = 4;
-    })
-)
+<style>
+    .grid-container {
+        margin: 20px;
+        display: grid;
+        align-items: center;
+        grid-template-columns: 200px 800px 200px;
+    }
+
+    .grid-item {
+        text-align: start;
+        padding: 2px;
+    }
+</style>

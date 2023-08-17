@@ -1,0 +1,17 @@
+﻿@using NonFactors.Mvc.Grid
+@model IEnumerable<StoreApp.DAL.Store>
+
+@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(m => m.Name).Titled("Name");
+        columns.Add(m => m.Address).Titled("Address");
+        columns.Add(m => m.IsMain).Titled("Is Main");
+        columns.Add(m => m.IsInvoiceDirect).Titled("Is Invoice Direct");
+    }).Empty("No data found")
+    .Pageable(pager =>
+    {
+        pager.RowsPerPage = 25;
+    })
+)
