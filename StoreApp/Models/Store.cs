@@ -17,12 +17,10 @@ namespace StoreApp.DAL
     {
         [Display(Name = "Store Name")]
         public string Name { get; set; }
-
-        [Required]
+        
         [Display(Name = "Is Main")]
         public bool IsMain { get; set; }
-
-        [Required]
+        
         [Display(Name = "Is Invoice Direct")]
         public bool IsInvoiceDirect { get; set; }
 

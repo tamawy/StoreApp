@@ -17,6 +17,6 @@ namespace StoreApp.DAL
         [Display(Name = "Product Name")]
         public string Name { get; set; }
         [Display(Name = "Count")]
-        public long count { get; set; }
+        public long Count { get; set; }
     }
 }

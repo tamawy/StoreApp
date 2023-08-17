@@ -37,7 +37,7 @@ namespace StoreApp.BLL
 
                 itemInDb.Name = store.Name;
                 itemInDb.SpaceFK = store.SpaceFK;
-                itemInDb.count = store.count;
+                itemInDb.Count = store.Count;
 
                 db.SaveChanges();
 

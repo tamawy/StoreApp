@@ -14,7 +14,7 @@ namespace StoreApp.DAL
         [StringLength(250)]
         public string Name { get; set; }
 
-        public long count { get; set; }
+        public long Count { get; set; }
 
         public long SpaceFK { get; set; }
 
