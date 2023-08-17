@@ -12,6 +12,10 @@
     }).Empty("No data found")
     .Pageable(pager =>
     {
-        pager.RowsPerPage = 25;
+        pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 2, "2" }, { 4, "4" } };
+        pager.ShowPageSizes = true;
+        pager.PagesToDisplay = 3;
+        pager.CurrentPage = 2;
+        pager.RowsPerPage = 2;
     })
 )

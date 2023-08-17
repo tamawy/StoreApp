@@ -7,7 +7,6 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/bootstrap.css")
-    @Styles.Render("~/Content/MvcGrid/mvc-grid.css")
     
 
     @Scripts.Render("~/bundles/modernizr")
@@ -36,6 +35,11 @@
     </nav>
     <div class="container body-content">
         @RenderBody()
+        
+        @Styles.Render("~/Content/MvcGrid/mvc-grid.css")
+        <script>
+           document.querySelectorAll(".mvc-grid").forEach(element => new MvcGrid(element));
+        </script>
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
