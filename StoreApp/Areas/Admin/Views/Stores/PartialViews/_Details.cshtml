@@ -1,0 +1,32 @@
+﻿@model StoreApp.DAL.Store
+
+<h4>Store Details</h4>
+<div class="grid-container">
+    <div class="grid-item">@Html.LabelFor(model => model.Name, new { @class = "form-label"})</div>
+    <div class="grid-item">@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", disabled="disabled" } })</div>
+
+    <div class="grid-item">@Html.LabelFor(s => s.IsMain, new { @class = "form-label" })</div>
+    <div class="grid-item">@Html.EditorFor(s => s.IsMain, new { @class = "form-check-input", Disabled = true })</div>
+
+    <div class="grid-item">@Html.LabelFor(s => s.IsInvoiceDirect, new { @class = "form-label" })</div>
+    <div class="grid-item">@Html.EditorFor(s => s.IsInvoiceDirect, new { @class = "form-check-input", Disabled = true })</div>
+    <div class="grid-item">@Html.LabelFor(s => s.Address, new { @class = "form-label" })</div>
+    <div class="grid-item">@Html.TextAreaFor(s => s.Address, new { @class = "form-control", disabled="disabled" })</div>
+</div>
+
+<script>
+    $('#form0 input').attr('disabled', true);
+</script>
+<style>
+    .grid-container {
+        margin: 20px;
+        display: grid;
+        align-items: center;
+        grid-template-columns: auto auto auto auto auto auto;
+    }
+
+    .grid-item {
+        text-align: start;
+        padding: 2px;
+    }
+</style>

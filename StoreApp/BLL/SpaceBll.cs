@@ -30,11 +30,20 @@ namespace StoreApp.BLL
             using var db = new DBModel();
             return db.Spaces.ToList();
         }
-
+        /// <summary>
+        /// Get all spaces inside a specific store
+        /// </summary>
+        /// <param name="storeId">Id of the store</param>
+        /// <returns>List of spaces inside id including Store, or null</returns>
+        public List<Space> GetAll(long storeId)
+        {
+            using var db = new DBModel();
+            return db.Spaces.Where(space => space.StoreFK == storeId).Include(space => space.Store).ToList();
+        }
         public Space GetOne(long? id)
         {
             using var db = new DBModel();
-            return db.Spaces.FirstOrDefault(s => s.Id == id);
+            return db.Spaces.Include(s => s.Store).FirstOrDefault(s => s.Id == id);
         }
 
         public (bool done, string message) Update(Space store)

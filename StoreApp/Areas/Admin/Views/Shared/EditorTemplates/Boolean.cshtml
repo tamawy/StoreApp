@@ -2,9 +2,11 @@
 
 @{
         var propName = ViewData.ModelMetadata.PropertyName;
+        var disabled = (bool?)ViewBag.Disabled;
 }
 <label class="switch">
-    <input type="checkbox" id="@propName" name="@propName" @(Model ?? false ? "checked" : "") value="@Model.ToString().ToLower()">
+    <input type="checkbox" @(disabled ?? false? "disabled" : "") 
+           id="@propName" name="@propName" @(Model ?? false ? "checked" : "") value="@Model.ToString().ToLower()">
 
     <span class="slider round" onclick="fClicked()"></span>
 </label>

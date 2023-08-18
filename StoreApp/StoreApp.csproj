@@ -135,6 +135,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\SpacesController.cs" />
     <Compile Include="Areas\Admin\Controllers\StoresController.cs" />
     <Compile Include="BLL\IBusinessAccessLayer.cs" />
     <Compile Include="BLL\MessagesHelper.cs" />
@@ -197,6 +198,13 @@
     <Content Include="Views\Shared\PartialViews\_Menu.cshtml" />
     <Content Include="Areas\Admin\Views\Stores\PartialViews\_Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Stores\PartialViews\_Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Spaces\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Spaces\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Spaces\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Spaces\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Spaces\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Spaces\PartialViews\_GetAll.cshtml" />
+    <Content Include="Areas\Admin\Views\Stores\PartialViews\_Details.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

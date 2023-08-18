@@ -53,8 +53,8 @@
         }).fail(function (data) {
         })
     }
-    function Spaces(id) {
-        alert("Spaces id : " + id);
+    function Spaces(storeFk) {
+        window.location.replace("@Url.Action("Index", "Spaces")/Index/"+storeFk);
     }
 </script>
 

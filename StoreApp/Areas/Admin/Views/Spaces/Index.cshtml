@@ -1,0 +1,8 @@
+﻿@model StoreApp.DAL.Space
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("~/Areas/Admin/Views/Stores/PartialViews/_Details.cshtml", Model.Store)
