@@ -13,16 +13,52 @@
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createForm">Create</button>
     </div>
 </div>
+
 <div>
     @Html.Partial("PartialViews/_Search", new Store())
 </div>
+
 <div id="allData">
-    @Html.Partial("PartialViews/_ModalPopUp", model: ("createForm", "Add Store", Html.Partial("PartialViews/_Create", new Store())))
+    @Html.Partial("PartialViews/_GetAll", Model)
 </div>
 
-<div>
-    @Html.Partial("PartialViews/_StoresTable", Model)
-</div>
+@Html.Partial("~/Views/Shared/PartialViews/_ModalPopUp.cshtml", model: ("createForm", "Add Store", Html.Partial("PartialViews/_Create", new Store())))
+@Html.Partial("~/Views/Shared/PartialViews/_ModalPopUp.cshtml", model: ("editForm", "Edit Store", new MvcHtmlString("")))
+@Html.Partial("~/Views/Shared/PartialViews/_ModalPopUp.cshtml", model: ("deleteForm", "", new MvcHtmlString("")))
+
+<script>
+    function Edit(id) {
+        $.ajax({
+            url: "@Url.Action("Edit")",
+            type: "Get",
+            data: {
+                id : id
+            }
+        }).done(function (data) {
+            $('#editForm-body').html(data);
+            $('#editForm').modal('show');
+        }).fail(function (data) {
+        })
+    }
+    function Delete(id) {
+        $.ajax({
+        url: "@Url.Action("Delete")",
+        type: "Get",
+        data: {
+            id : id
+        }
+        }).done(function (data) {
+            $('#deleteForm-body').html(data);
+            $('#deleteForm').modal('show');
+        }).fail(function (data) {
+        })
+    }
+    function Spaces(id) {
+        alert("Spaces id : " + id);
+    }
+</script>
+
+
 
 <style>
     .grid-container {

@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Web.Helpers;
 using System.Web.Mvc;
 using StoreApp.BLL;
 using StoreApp.DAL;
@@ -20,7 +19,7 @@ namespace StoreApp.Areas.Admin.Controllers
         [HttpGet]
         public PartialViewResult GetAll()
         {
-            return PartialView("PartialViews/_StoresTable", StoreBll.GetAll());
+            return PartialView("PartialViews/_GetAll", StoreBll.GetAll());
         }
         // GET: Admin/Stores/Details/5
         public ActionResult Details(long? id)
@@ -65,7 +64,7 @@ namespace StoreApp.Areas.Admin.Controllers
             }
 
             var store = StoreBll.GetOne(id);
-            return View(store);
+            return PartialView("PartialViews/_Edit", store);
         }
 
         // POST: Admin/Stores/Edit/5
@@ -88,12 +87,12 @@ namespace StoreApp.Areas.Admin.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var store = StoreBll.GetOne(id);
-            return View(store);
+            return PartialView( "PartialViews/_Delete",store);
         }
 
         // POST: Admin/Stores/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
             StoreBll.Delete(id);

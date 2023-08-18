@@ -150,6 +150,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\MenuItem.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Space.cs" />
     <Compile Include="Models\Store.cs" />
@@ -190,9 +191,12 @@
     <Content Include="Content\MvcGrid\Fonts\GridGlyphs.woff" />
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Boolean.cshtml" />
     <Content Include="Areas\Admin\Views\Stores\PartialViews\_Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Stores\PartialViews\_ModalPopUp.cshtml" />
-    <Content Include="Areas\Admin\Views\Stores\PartialViews\_StoresTable.cshtml" />
+    <Content Include="Views\Shared\PartialViews\_ModalPopUp.cshtml" />
+    <Content Include="Areas\Admin\Views\Stores\PartialViews\_GetAll.cshtml" />
     <Content Include="Areas\Admin\Views\Stores\PartialViews\_Search.cshtml" />
+    <Content Include="Views\Shared\PartialViews\_Menu.cshtml" />
+    <Content Include="Areas\Admin\Views\Stores\PartialViews\_Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Stores\PartialViews\_Delete.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -227,6 +231,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

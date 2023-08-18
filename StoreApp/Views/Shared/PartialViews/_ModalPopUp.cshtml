@@ -1,13 +1,13 @@
 ﻿@model (string popUpId, string header, MvcHtmlString body)
 <div id="@Model.popUpId" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg" style="width: 1000px">
+    <div class="modal-dialog" style="width: 1000px">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
-                <h4 class="modal-title">@Model.header</h4>
+                <h4 class="modal-title" id="@Model.popUpId-header">@Model.header</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="@Model.popUpId-body">
                 @Model.body
             </div>
         </div>

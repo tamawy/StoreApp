@@ -1,0 +1,37 @@
+﻿@using NonFactors.Mvc.Grid
+@using StoreApp.Helpers
+@model IEnumerable<StoreApp.DAL.Store>
+
+@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(m => m.Name).Titled("Name");
+        columns.Add(m => m.Address).Titled("Address");
+        columns.Add(m => m.IsMain).Titled("Is Main");
+        columns.Add(m => m.IsInvoiceDirect).Titled("Is Invoice Direct");
+        columns.Add().RenderedAs(m => Html.Partial("~/Views/Shared/PartialViews/_Menu.cshtml", new List<MenuItem>()
+        {
+            new MenuItem()
+            {
+                DisplayName = "/ Edit",
+                OnClickFunction = $"Edit({m.Id})"
+            },
+            new MenuItem()
+            {
+                DisplayName = "Delete",
+                FontAwesomeIcon = "fa-solid fa-circle-minus",
+                OnClickFunction = $"Delete({m.Id})"
+            },
+            new MenuItem()
+            {
+                DisplayName = "[] Spaces",
+                OnClickFunction = $"Spaces({m.Id})"
+            }
+        }))
+            .Encoded(false);
+    }).Pageable(pager =>
+    {
+        pager.RowsPerPage = 10;
+    })
+    )
