@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using StoreApp.BLL;
 using StoreApp.DAL;
 
@@ -17,7 +18,7 @@ namespace StoreApp.Areas.Admin.Controllers
         /// <param name="id">Store Id</param>
         /// <returns></returns>
         // GET: Admin/Spaces
-        public ActionResult Index(long id)
+        public ActionResult Index(long? id)
         {
             return View(SpaceBll.GetOne(id));
         }
@@ -73,13 +74,9 @@ namespace StoreApp.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Space space = db.Spaces.Find(id);
-            if (space == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.StoreFK = new SelectList(db.Stores, "Id", "Name", space.StoreFK);
-            return View(space);
+
+            var store = SpaceBll.GetOne(id);
+            return PartialView("PartialViews/_Edit", store);
         }
 
         // POST: Admin/Spaces/Edit/5
@@ -89,14 +86,9 @@ namespace StoreApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,StoreFK")] Space space)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(space).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.StoreFK = new SelectList(db.Stores, "Id", "Name", space.StoreFK);
-            return View(space);
+            if (!ModelState.IsValid) return RedirectToAction("Index", space.StoreFK);
+            SpaceBll.Update(space);
+            return RedirectToAction("Index", new {id = space.StoreFK });
         }
 
         // GET: Admin/Spaces/Delete/5

@@ -1,1 +1,53 @@
-﻿@model IEnumerable<StoreApp.DAL.Space>
+﻿@using StoreApp.Helpers
+@model IEnumerable<StoreApp.DAL.Space>
+
+<div>
+    <i class="fa-solid fa-circle-exclamation" style="color: red; display: inline;"></i>
+    <p style="color: red; display: inline;">By default after creating a store it should have one space defined</p>
+</div>
+<div class="row">
+    @foreach (var space in Model)
+    {
+        <div class="card" style="width: -moz-max-content; height: 400px">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <p>@space.Name</p>
+                    </div>
+                    <div class="col col-xl-auto">
+                        @Html.Partial("~/Views/Shared/PartialViews/_Menu.cshtml", new List<MenuItem>()
+                        {
+                            new MenuItem()
+                            {
+                                DisplayName = "/ Edit",
+                                OnClickFunction = $"Edit({space.Id})"
+                            },
+                            new MenuItem()
+                            {
+                                DisplayName = "Split",
+                                FontAwesomeIcon = "fa-solid fa-circle-plus",
+                                OnClickFunction = $"Split({space.Id})"
+                            },
+                            new MenuItem()
+                            {
+                                DisplayName = "Delete",
+                                FontAwesomeIcon = "fa-solid fa-circle-minus",
+                                OnClickFunction = $"Delete({space.Id})"
+                            },
+                            new MenuItem()
+                            {
+                                DisplayName = "/ Merge",
+                                OnClickFunction = $"Merge({space.Id})"
+                            },new MenuItem()
+                            {
+                                DisplayName = "Product",
+                                FontAwesomeIcon = "fa-solid fa-circle fa-2xs",
+                                OnClickFunction = $"Products({space.Id})"
+                            }
+                        })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

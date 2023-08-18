@@ -21,20 +21,6 @@ namespace StoreApp.Areas.Admin.Controllers
         {
             return PartialView("PartialViews/_GetAll", StoreBll.GetAll());
         }
-        // GET: Admin/Stores/Details/5
-        public ActionResult Details(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var store = StoreBll.GetOne(id);
-            if (store == null)
-            {
-                return HttpNotFound();
-            }
-            return View(store);
-        }
 
         // GET: Admin/Stores/Create
         public PartialViewResult Create()
@@ -74,7 +60,7 @@ namespace StoreApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,IsMain,IsInvoiceDirect,Address")] Store store)
         {
-            if (!ModelState.IsValid) return View(store);
+            if (!ModelState.IsValid) return RedirectToAction("Index");
             StoreBll.Update(store);
             return RedirectToAction("Index");
         }

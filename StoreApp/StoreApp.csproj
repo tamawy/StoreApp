@@ -185,9 +185,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\Admin\Views\Stores\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Stores\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Stores\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Stores\Index.cshtml" />
     <Content Include="Content\MvcGrid\Fonts\GridGlyphs.woff" />
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Boolean.cshtml" />
@@ -205,6 +202,7 @@
     <Content Include="Areas\Admin\Views\Spaces\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Spaces\PartialViews\_GetAll.cshtml" />
     <Content Include="Areas\Admin\Views\Stores\PartialViews\_Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Spaces\PartialViews\_Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

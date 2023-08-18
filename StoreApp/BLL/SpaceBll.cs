@@ -38,12 +38,12 @@ namespace StoreApp.BLL
         public List<Space> GetAll(long storeId)
         {
             using var db = new DBModel();
-            return db.Spaces.Where(space => space.StoreFK == storeId).Include(space => space.Store).ToList();
+            return db.Spaces.Where(space => space.StoreFK == storeId).Include(space => space.Store.Spaces).ToList();
         }
         public Space GetOne(long? id)
         {
             using var db = new DBModel();
-            return db.Spaces.Include(s => s.Store).FirstOrDefault(s => s.Id == id);
+            return db.Spaces.Include(s => s.Store.Spaces).FirstOrDefault(s => s.Id == id);
         }
 
         public (bool done, string message) Update(Space store)
