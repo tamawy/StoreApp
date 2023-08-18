@@ -9,6 +9,7 @@
 @Html.Partial("PartialViews/_GetAll", Model.Store.Spaces)
 @Html.Partial("~/Views/Shared/PartialViews/_ModalPopUp.cshtml", model: ("editForm", "Edit Store", new MvcHtmlString("")))
 @Html.Partial("~/Views/Shared/PartialViews/_ModalPopUp.cshtml", model: ("splitForm", "Split Store Spaces", new MvcHtmlString("")))
+@Html.Partial("~/Views/Shared/PartialViews/_ModalPopUp.cshtml", model: ("deleteForm", "", new MvcHtmlString("")))
 
 <script>
     function Edit(id) {
@@ -38,12 +39,25 @@
         })
     }
     function Delete(id) {
-
+        $.ajax({
+            url: "@Url.Action("Delete")",
+            type: "Get",
+            data: {
+                id : id
+            }
+        }).done(function (data) {
+            $('#deleteForm-body').html(data);
+            $('#deleteForm').modal('show');
+        }).fail(function (data) {
+        })
     }
     function Merge(id) {
 
     }
     function Products(id) {
 
+    }
+    function closeDeleteModal() {
+        $('#deleteForm').modal('hide');
     }
 </script>

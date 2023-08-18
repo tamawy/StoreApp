@@ -162,11 +162,12 @@ namespace StoreApp.BLL
         /// <returns></returns>
         public (bool done, string message) MergeTwoSpaces(long storeId, long firstSpaceId, long secondSpaceId)
         {
-            var store = StoreBll.GetOne(storeId);
+            using var db = new DBModel();
+            var store = db.Stores.FirstOrDefault(s => s.Id == storeId);
             if(store == null) return (false,  MessagesHelper.ItemNotFound);
             // Check if the two spaces at the same store
             var spacesIds = new List<long>{ firstSpaceId, secondSpaceId };
-            if (!IsSpacesAtTheSameStore(storeId, spacesIds))
+            if (!IsSpacesAtTheSameStore(store, spacesIds))
                 return (false, "Can not merge spaces in different stores.");
             
             // Move Products in the second store to the first store
@@ -179,16 +180,13 @@ namespace StoreApp.BLL
         /// <summary>
         /// Check if the list of spaces at he same store
         /// </summary>
-        /// <param name="storeId">Store Id</param>
+        /// <param name="store">Store to check in</param>
         /// <param name="spaceIds">IEnumerable of spaces ids</param>
         /// <returns></returns>
-        public bool IsSpacesAtTheSameStore(long storeId, IEnumerable<long> spaceIds)
+        public bool IsSpacesAtTheSameStore(Store store, IEnumerable<long> spaceIds)
         {
-            var store = StoreBll.GetOne(storeId);
             if (store == null) return false;
-
             var storeSpacesId = store.Spaces.Select(s => s.Id).ToList();
-
             return spaceIds.All(spaceId => storeSpacesId.Contains(spaceId));
         }
 

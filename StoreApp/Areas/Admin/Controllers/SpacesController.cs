@@ -1,8 +1,5 @@
-﻿using System.Data.Entity;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 using StoreApp.BLL;
 using StoreApp.DAL;
 
@@ -26,20 +23,6 @@ namespace StoreApp.Areas.Admin.Controllers
         public ActionResult GetAll(long id)
         {
             return PartialView("PartialViews/_GetAll", SpaceBll.GetAll(id));
-        }
-        // GET: Admin/Spaces/Details/5
-        public ActionResult Details(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Space space = db.Spaces.Find(id);
-            if (space == null)
-            {
-                return HttpNotFound();
-            }
-            return View(space);
         }
 
         [HttpGet]
@@ -87,32 +70,17 @@ namespace StoreApp.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Space space = db.Spaces.Find(id);
-            if (space == null)
-            {
-                return HttpNotFound();
-            }
-            return View(space);
+            var store = SpaceBll.GetOne(id);
+            return PartialView("PartialViews/_Delete", store);
         }
 
         // POST: Admin/Spaces/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(long id)
+        //[ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed([Bind(Include = "Id, StoreFK, Count")] Space space)
         {
-            Space space = db.Spaces.Find(id);
-            db.Spaces.Remove(space);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            SpaceBll.Delete(space.Id);
+            return RedirectToAction("Index", new {id = space.StoreFK });
         }
     }
 }

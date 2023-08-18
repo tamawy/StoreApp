@@ -1,0 +1,18 @@
+﻿@model StoreApp.DAL.Space
+<div>
+    <h4>Are you sure you want to delete this Space?</h4>
+    <p style="color:red">Note: Store must have at least one space</p>
+    @using (Html.BeginForm("Delete", "Spaces", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.StoreFK)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Yes" class="btn btn-danger" />
+                <input type="reset" onclick="closeDeleteModal()" value="No" class="btn btn-primary" />
+            </div>
+        </div>
+    }
+</div>
