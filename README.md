@@ -58,5 +58,5 @@ graph TD
 ```
 
 ### How to use this project
-1. First download database script <a href="">script</a>
+1. First download database <a href="./helpers/">script</a> and run it.
 2. Clone this project and run it.
