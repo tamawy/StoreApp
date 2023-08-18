@@ -1,5 +1,8 @@
 # StoreApp
-
+### How to use this project
+1. First download database <a href="./helpers/">script</a> and run it.
+2. Clone this project and run it (you may need clean solution and rebuild it).
+3. To go to "Store" page, click "Store" in the "Navigation Page"
 ### Database Digram
 ```mermaid
 erDiagram
@@ -56,7 +59,3 @@ graph TD
     V --> MC
     MC --> V
 ```
-
-### How to use this project
-1. First download database <a href="./helpers/">script</a> and run it.
-2. Clone this project and run it.
