@@ -135,6 +135,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SpacesController.cs" />
     <Compile Include="Areas\Admin\Controllers\StoresController.cs" />
     <Compile Include="BLL\IBusinessAccessLayer.cs" />
@@ -202,6 +203,7 @@
     <Content Include="Areas\Admin\Views\Spaces\PartialViews\_Split.cshtml" />
     <Content Include="Areas\Admin\Views\Spaces\PartialViews\_Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Spaces\PartialViews\_Merge.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\PartialViews\_GetAll.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

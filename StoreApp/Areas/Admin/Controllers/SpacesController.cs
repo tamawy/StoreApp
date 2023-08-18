@@ -8,16 +8,16 @@ namespace StoreApp.Areas.Admin.Controllers
     public class SpacesController : Controller
     {
         private static readonly SpaceBll SpaceBll = new ();
-        private DBModel db = new DBModel();
+        private static readonly StoreBll StoreBll = new ();
         /// <summary>
-        /// Get the spaces in specific store
+        /// 
         /// </summary>
         /// <param name="id">Store Id</param>
         /// <returns></returns>
         // GET: Admin/Spaces
         public ActionResult Index(long? id)
         {
-            return View(SpaceBll.GetOne(id));
+            return View(StoreBll.GetOne(id));
         }
 
         public ActionResult GetAll(long id)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using StoreApp.DAL;
 
@@ -18,6 +19,16 @@ namespace StoreApp.BLL
         {
             using var db = new DBModel();
             return db.Products.ToList();
+        }
+
+        /// <summary>
+        /// Get all spaces inside a specific space
+        /// </summary>
+        /// <param name="spaceId">Space Id</param>
+        /// <returns>List of products inside id including Store, or null</returns>
+        public List<Product> GetAll(long spaceId)
+        {
+            return GetAll().Where(p => p.SpaceFK == spaceId).ToList();
         }
 
         public Product GetOne(long? id)

@@ -1,0 +1,24 @@
+﻿@using NonFactors.Mvc.Grid
+@using StoreApp.Helpers
+@model IEnumerable<StoreApp.DAL.Product>
+
+@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(m => m.Name).Titled("Name");
+        columns.Add(m => m.Count).Titled("Count");
+        columns.Add().RenderedAs(m => Html.Partial("~/Views/Shared/PartialViews/_Menu.cshtml", new List<MenuItem>()
+        {
+            new MenuItem()
+            {
+                DisplayName = "Move",
+                FontAwesomeIcon = "fa-solid fa-circle-plus",
+                OnClickFunction = $"MoveTo({m.Id})"
+            }
+        })).Encoded(false);
+    }).Pageable(pager =>
+    {
+        pager.RowsPerPage = 10;
+    }).Empty("No data found")
+    )

@@ -37,7 +37,7 @@ namespace StoreApp.BLL
         public Store GetOne(long? id)
         {
             using var db = new DBModel();
-            return db.Stores.FirstOrDefault(s => s.Id == id);
+            return db.Stores.Include(s => s.Spaces).FirstOrDefault(s => s.Id == id);
         }
 
         public (bool done, string message) Update(Store store)

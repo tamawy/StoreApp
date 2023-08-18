@@ -33,7 +33,7 @@ namespace StoreApp.BLL
         /// <summary>
         /// Get all spaces inside a specific store
         /// </summary>
-        /// <param name="storeId">Id of the store</param>
+        /// <param name="storeId">Space Id</param>
         /// <returns>List of spaces inside id including Store, or null</returns>
         public List<Space> GetAll(long storeId)
         {
