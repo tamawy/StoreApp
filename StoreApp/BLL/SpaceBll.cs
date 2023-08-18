@@ -128,13 +128,7 @@ namespace StoreApp.BLL
         {
             // Get the store
             var currentSpace = GetOne(spaceId);
-            if (currentSpace == null) return (true, MessagesHelper.ItemNotFound);
-
-            // Get the store
-            var store = StoreBll.GetOne(currentSpace.StoreFK);
-            return store == null ? (true, MessagesHelper.ItemNotFound) :
-                // create new spaces
-                CreateSpaces(store.Id, numberOfSpaces);
+            return currentSpace == null ? (true, MessagesHelper.ItemNotFound) : CreateSpaces(currentSpace.Store.Id, numberOfSpaces);
         }
 
         /// <summary>

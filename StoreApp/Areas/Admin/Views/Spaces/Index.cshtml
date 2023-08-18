@@ -8,7 +8,7 @@
 @Html.Partial("~/Areas/Admin/Views/Stores/PartialViews/_Details.cshtml", Model.Store)
 @Html.Partial("PartialViews/_GetAll", Model.Store.Spaces)
 @Html.Partial("~/Views/Shared/PartialViews/_ModalPopUp.cshtml", model: ("editForm", "Edit Store", new MvcHtmlString("")))
-@Html.Partial("~/Views/Shared/PartialViews/_ModalPopUp.cshtml", model: ("deleteForm", "", new MvcHtmlString("")))
+@Html.Partial("~/Views/Shared/PartialViews/_ModalPopUp.cshtml", model: ("splitForm", "Split Store Spaces", new MvcHtmlString("")))
 
 <script>
     function Edit(id) {
@@ -25,7 +25,17 @@
         })
     }
     function Split(id) {
-
+        $.ajax({
+        url: "@Url.Action("Split")",
+        type: "Get",
+        data: {
+            id : id
+        }
+        }).done(function (data) {
+            $('#editForm-body').html(data);
+            $('#editForm').modal('show');
+        }).fail(function (data) {
+        })
     }
     function Delete(id) {
 

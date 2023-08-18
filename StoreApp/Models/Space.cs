@@ -1,16 +1,18 @@
-﻿using StoreApp.DAL;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Configuration;
 
 namespace StoreApp.DAL
 {
     [MetadataType(typeof(SpaceAnnotation))]
     public partial class Space
     {
-
+        [Display(Name = "New Spaces Count")]
+        [NotMapped]
+        [IntegerValidator (MinValue = 2)]
+        public int Count { get; set; }
+        
     }
 
     internal class SpaceAnnotation

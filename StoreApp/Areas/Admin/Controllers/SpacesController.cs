@@ -42,31 +42,22 @@ namespace StoreApp.Areas.Admin.Controllers
             return View(space);
         }
 
-        // GET: Admin/Spaces/Create
-        public ActionResult Create()
+        [HttpGet]
+        public ActionResult Split(long? id)
         {
-            ViewBag.StoreFK = new SelectList(db.Stores, "Id", "Name");
-            return View();
-        }
-
-        // POST: Admin/Spaces/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,StoreFK")] Space space)
-        {
-            if (ModelState.IsValid)
+            if (id == null)
             {
-                db.Spaces.Add(space);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            ViewBag.StoreFK = new SelectList(db.Stores, "Id", "Name", space.StoreFK);
-            return View(space);
+            return PartialView("PartialViews/_Split", SpaceBll.GetOne(id));
         }
 
+        [HttpPost]
+        public ActionResult Split([Bind(Include = "Id, StoreFK, Count")] Space space)
+        {
+            SpaceBll.SplitSpace(space.Id, space.Count);
+            return RedirectToAction("Index", new { id = space.StoreFK });
+        }
         // GET: Admin/Spaces/Edit/5
         public ActionResult Edit(long? id)
         {
@@ -74,11 +65,9 @@ namespace StoreApp.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
             var store = SpaceBll.GetOne(id);
             return PartialView("PartialViews/_Edit", store);
         }
-
         // POST: Admin/Spaces/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.

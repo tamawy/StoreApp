@@ -195,7 +195,6 @@
     <Content Include="Views\Shared\PartialViews\_Menu.cshtml" />
     <Content Include="Areas\Admin\Views\Stores\PartialViews\_Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Stores\PartialViews\_Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Spaces\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Spaces\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Spaces\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Spaces\Edit.cshtml" />
@@ -203,6 +202,7 @@
     <Content Include="Areas\Admin\Views\Spaces\PartialViews\_GetAll.cshtml" />
     <Content Include="Areas\Admin\Views\Stores\PartialViews\_Details.cshtml" />
     <Content Include="Areas\Admin\Views\Spaces\PartialViews\_Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Spaces\PartialViews\_Split.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
