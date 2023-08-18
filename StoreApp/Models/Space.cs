@@ -12,6 +12,10 @@ namespace StoreApp.DAL
         [NotMapped]
         [IntegerValidator (MinValue = 2)]
         public int Count { get; set; }
+
+        // Id of the item to be merged
+        [NotMapped]
+        public int MergedItemId { get; set; }
         
     }
 

@@ -1,0 +1,29 @@
+﻿@using WebGrease.Css.Extensions
+@model StoreApp.DAL.Space
+@{
+    var spaces = Model.Store.Spaces.Where(s => s.Id != Model.Id);
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.StoreFK)
+        
+        @Html.LabelFor(s => s.Store.Spaces)
+        @Html.DropDownListFor(s => s.MergedItemId,
+            new SelectList
+                (spaces, "Id", "Name"),
+            new { @class = "form-control" })
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+@Scripts.Render("~/bundles/jqueryval")

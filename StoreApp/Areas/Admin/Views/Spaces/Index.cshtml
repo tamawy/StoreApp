@@ -10,6 +10,7 @@
 @Html.Partial("~/Views/Shared/PartialViews/_ModalPopUp.cshtml", model: ("editForm", "Edit Store", new MvcHtmlString("")))
 @Html.Partial("~/Views/Shared/PartialViews/_ModalPopUp.cshtml", model: ("splitForm", "Split Store Spaces", new MvcHtmlString("")))
 @Html.Partial("~/Views/Shared/PartialViews/_ModalPopUp.cshtml", model: ("deleteForm", "", new MvcHtmlString("")))
+@Html.Partial("~/Views/Shared/PartialViews/_ModalPopUp.cshtml", model: ("mergeForm", "", new MvcHtmlString("")))
 
 <script>
     function Edit(id) {
@@ -33,8 +34,8 @@
             id : id
         }
         }).done(function (data) {
-            $('#editForm-body').html(data);
-            $('#editForm').modal('show');
+            $('#splitForm-body').html(data);
+            $('#splitForm').modal('show');
         }).fail(function (data) {
         })
     }
@@ -52,7 +53,17 @@
         })
     }
     function Merge(id) {
-
+        $.ajax({
+            url: "@Url.Action("Merge")",
+            type: "Get",
+            data: {
+                id : id
+            }
+        }).done(function (data) {
+            $('#mergeForm-body').html(data);
+            $('#mergeForm').modal('show');
+        }).fail(function (data) {
+        })
     }
     function Products(id) {
 

@@ -70,8 +70,8 @@ namespace StoreApp.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var store = SpaceBll.GetOne(id);
-            return PartialView("PartialViews/_Delete", store);
+            var space = SpaceBll.GetOne(id);
+            return PartialView("PartialViews/_Delete", space);
         }
 
         // POST: Admin/Spaces/Delete/5
@@ -81,6 +81,28 @@ namespace StoreApp.Areas.Admin.Controllers
         {
             SpaceBll.Delete(space.Id);
             return RedirectToAction("Index", new {id = space.StoreFK });
+        }
+        /// <summary>
+        /// Get Merge Form
+        /// </summary>
+        /// <param name="id">Id of the space to be merged</param>
+        /// <returns></returns>
+        // GET: Admin/Spaces/Merge/5
+        [HttpGet]
+        public ActionResult Merge(long? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var space = SpaceBll.GetOne(id);
+            return PartialView("PartialViews/_Merge", space);
+        }
+        [HttpPost]
+        public ActionResult Merge([Bind(Include = "Id, StoreFK, MergedItemId")] Space space)
+        {
+            SpaceBll.MergeTwoSpaces(space.StoreFK, space.Id, space.MergedItemId);
+            return RedirectToAction("Index", new { id = space.StoreFK});
         }
     }
 }
