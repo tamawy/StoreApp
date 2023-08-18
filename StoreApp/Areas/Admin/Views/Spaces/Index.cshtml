@@ -10,7 +10,8 @@
 @Html.Partial("~/Views/Shared/PartialViews/_ModalPopUp.cshtml", model: ("editForm", "Edit Store", new MvcHtmlString("")))
 @Html.Partial("~/Views/Shared/PartialViews/_ModalPopUp.cshtml", model: ("splitForm", "Split Store Spaces", new MvcHtmlString("")))
 @Html.Partial("~/Views/Shared/PartialViews/_ModalPopUp.cshtml", model: ("deleteForm", "", new MvcHtmlString("")))
-@Html.Partial("~/Views/Shared/PartialViews/_ModalPopUp.cshtml", model: ("mergeForm", "", new MvcHtmlString("")))
+@Html.Partial("~/Views/Shared/PartialViews/_ModalPopUp.cshtml", model: ("mergeForm", "Merge With", new MvcHtmlString("")))
+@Html.Partial("~/Views/Shared/PartialViews/_ModalPopUp.cshtml", model: ("moveProductForm", "Move To", new MvcHtmlString("")))
 
 <script>
     function Edit(id) {
@@ -65,21 +66,55 @@
         }).fail(function (data) {
         })
     }
-    function Products(id) {
-        spaceId = "space-" + id;
+
+    // load products inside a space
+    function LoadProducts(spaceId) {
+        var htmlSpaceId = "space-" + spaceId;
+        console.log(htmlSpaceId);
         $.ajax({
             url: "@Url.Action("GetProducts", controllerName:"Products")",
             type: "Get",
             data: {
-                id : id
+                id : spaceId
             }
         }).done(function (data) {
-            console.log("id=" + spaceId)
-            document.getElementById(spaceId).innerHTML = data;
+            document.getElementById(htmlSpaceId).innerHTML = data;
+        }).fail(function (data) {
+        })
+    }
+    function MoveProduct(productId) {
+        $.ajax({
+            url: "@Url.Action("MoveToAnotherSpace", "Products")",
+            type: "Get",
+            data: {
+                id: productId
+            }
+        }).done(function (data) {
+            $('#moveProductForm-body').html(data);
+            $('#moveProductForm').modal('show');
         }).fail(function (data) {
         })
     }
     function closeDeleteModal() {
         $('#deleteForm').modal('hide');
+    }
+    
+    function closeMoveProductModal() {
+        $('#moveProductForm').modal('hide');
+    }
+
+    // When "MoveProductToAnotherSpace" form
+    function onSuccess(data)
+    {
+        if (data.done) {
+            //console.log(data)
+            // Reload the two spaces that changed
+            LoadProducts(data.newSpaceId);
+            LoadProducts(data.oldSpaceId);
+        }
+    }
+    function onFailure(data)
+    {
+
     }
 </script>

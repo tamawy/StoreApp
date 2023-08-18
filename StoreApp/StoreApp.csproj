@@ -204,6 +204,7 @@
     <Content Include="Areas\Admin\Views\Spaces\PartialViews\_Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Spaces\PartialViews\_Merge.cshtml" />
     <Content Include="Areas\Admin\Views\Products\PartialViews\_GetAll.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\PartialViews\_Move.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

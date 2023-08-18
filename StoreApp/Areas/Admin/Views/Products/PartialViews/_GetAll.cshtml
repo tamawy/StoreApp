@@ -6,7 +6,7 @@
     .Grid(Model)
     .Build(columns =>
     {
-        columns.Add(m => m.Name).Titled("Name");
+        columns.Add(m => m.Name).Titled("Product Name");
         columns.Add(m => m.Count).Titled("Count");
         columns.Add().RenderedAs(m => Html.Partial("~/Views/Shared/PartialViews/_Menu.cshtml", new List<MenuItem>()
         {
@@ -14,7 +14,7 @@
             {
                 DisplayName = "Move",
                 FontAwesomeIcon = "fa-solid fa-circle-plus",
-                OnClickFunction = $"MoveTo({m.Id})"
+                OnClickFunction = $"MoveProduct({m.Id})"
             }
         })).Encoded(false);
     }).Pageable(pager =>

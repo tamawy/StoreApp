@@ -34,7 +34,7 @@ namespace StoreApp.BLL
         public Product GetOne(long? id)
         {
             using var db = new DBModel();
-            return db.Products.FirstOrDefault(p => p.Id == id);
+            return db.Products.Include(p => p.Space.Store.Spaces).FirstOrDefault(p => p.Id == id);
         }
 
         public (bool done, string message) Update(Product store)
@@ -83,6 +83,7 @@ namespace StoreApp.BLL
             if (!product.Space.Store.Spaces.Select(s => s.Id).Contains(spaceId))
                 return (false, "Can not move item to a store in another store.");
 
+            // Make the SpaceFk = the new SpaceId
             product.SpaceFK = spaceId;
             return Update(product);
         }
