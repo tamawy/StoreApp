@@ -43,10 +43,10 @@ graph TD
         BLL[Business Logic Layer]
     end
 
-    subgraph Controller
+    subgraph MVC
         MC[Model and Controller]
     end
-    subgraph Controller
+    subgraph MVC
         V[View]
     end
 
