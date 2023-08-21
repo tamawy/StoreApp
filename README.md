@@ -50,9 +50,7 @@ graph TD
         V[View]
     end
 
-    DB --> DAL
     DAL --> DB
-    DAL --> BLL
     BLL --> DAL
     BLL --> MC
     MC --> BLL
